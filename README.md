@@ -44,3 +44,8 @@ Devem ser entregues/postados:
 - o código executável e o código fonte (ou a URL onde estes se encontram disponíveis)
 - a documentação básica da implementação juntamente com um README com orientações para instalação e execução do protótipo, além de comentários sobre limitações deste e outras observações julgadas pertinentes. Também deve constar deste documento as referências a todas bibliotecas/módulos/pacotes de terceiros empregadas no protótipo. Modificações realizadas nos algoritmos também devem estar descritas neste documento
 - O código pode também ser disponibilizado via github, bitbucket, etc., assim como a aplicação pode estar hospedada online.
+
+<hr>
+<h4>Referências</h4>
+<p>CRC-8 - https://github.com/phongvang/Networking-Program/blob/master/CRC8.java</p>
+<hr>
