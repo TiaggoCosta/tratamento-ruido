@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 public class Main {
 
     public static void main(String[] args) {
@@ -50,6 +51,64 @@ public class Main {
                 selectedFile = fileChooser.getSelectedFile();
                 JOptionPane.showMessageDialog(null, selectedFile.getName());
             }
+
+            if (op == 1) {
+                try {
+                    //Decoder decoder = null;
+                    byte[] data = Files.readAllBytes(selectedFile.toPath());
+                    byte[] result = data/* decoder.decode(data) */;
+                    final String ext = ".dec";
+                    String filePath = selectedFile.getPath();
+                    int extIndex = filePath.lastIndexOf(".");
+                    String newPath = (extIndex > -1 ? filePath.substring(0, extIndex) : filePath) + ext;
+                    Files.write(Paths.get(newPath), result);
+                    JOptionPane.showMessageDialog(null, "Decodificação concluída com sucesso");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                // escolher codificador (0: Golomb, 1:Elias-Gamma, 2:Fibonacci, 3:Unária e 4:Delta)
+                Object[] items = {"Golomb", "Elias-Gamma", "Fibonacci", "Unária", "Delta"};
+                Object selectedValue = JOptionPane.showInputDialog(null, "Escolha um codificador:", "Opção",
+                        JOptionPane.INFORMATION_MESSAGE, null, items, items[0]);
+
+                if(selectedValue == items[0]) {
+                    boolean invalidDivisor = true;
+                    String inputValue = null;
+
+                    while (invalidDivisor) {
+                        inputValue = JOptionPane.showInputDialog("Insira o valor do divisor: (Entre 1 e 255)");
+
+                        if (inputValue == null) {
+                            break;
+                        }
+
+                        try {
+                            int divisor = Integer.parseInt(inputValue);
+                            if(divisor > 0 && divisor < 256) {
+                                invalidDivisor = false;
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                try {
+                    byte[] data = Files.readAllBytes(selectedFile.toPath());
+                    byte[] result = data/* encoder.encode(data) */;
+                    final String ext = ".cod";
+                    String filePath = selectedFile.getPath();
+                    int extIndex = filePath.lastIndexOf(".");
+                    String newPath = (extIndex > -1 ? filePath.substring(0, extIndex) : filePath) + ext;
+                    System.out.println("resultado: " + Arrays.toString(result));
+                    Files.write(Paths.get(newPath), result);
+                    JOptionPane.showMessageDialog(null, "Codificação concluída com sucesso");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
+        System.exit(0);
     }
 }
