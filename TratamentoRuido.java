@@ -1,10 +1,10 @@
-import crc.CRC;
+import crc.CRC8;
 import hamming.Hamming;
 
 public class TratamentoRuido {
 
     public byte[] addNoiseTreatment(byte[] data){
-        CRC.checksum(getDataForCrc(data));
+        CRC8.calc(getDataForCrc(data));
         Hamming.encode(data);
         return null;
     }
@@ -14,7 +14,6 @@ public class TratamentoRuido {
         for(int i = 0; i < 2; i++){
             dataForCrc[i] = data[i];
         }
-        dataForCrc[2] = (byte)0x00;
         return dataForCrc;
     }
 
