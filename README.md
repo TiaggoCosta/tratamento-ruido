@@ -47,5 +47,5 @@ Devem ser entregues/postados:
 
 <hr>
 <h4>Referências</h4>
-<p>CRC-8 - https://github.com/phongvang/Networking-Program/blob/master/CRC8.java</p>
+<p>CRC-8 - https://github.com/drogatkin/JustFLAC/blob/master/src/java/org/kc7bfi/jflac/util/CRC8.java</p>
 <hr>
