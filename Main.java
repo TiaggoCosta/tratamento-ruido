@@ -95,8 +95,9 @@ public class Main {
                 }
 
                 try {
+                    TratamentoRuido encoder = new TratamentoRuido();
                     byte[] data = Files.readAllBytes(selectedFile.toPath());
-                    byte[] result = data/* encoder.encode(data) */;
+                    byte[] result = encoder.addNoiseTreatment(data);
                     final String ext = ".cod";
                     String filePath = selectedFile.getPath();
                     int extIndex = filePath.lastIndexOf(".");
