@@ -4,7 +4,7 @@ import hamming.Hamming;
 public class TratamentoRuido {
 
     public byte[] addNoiseTreatment(byte[] data){
-        CRC8.calc(getDataForCrc(data));
+        //CRC.checksum(getDataForCrc(data));
         Hamming.encode(data);
         return null;
     }
