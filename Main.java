@@ -57,6 +57,13 @@ public class Main {
                 JOptionPane.showMessageDialog(null, selectedFile.getName());
             }
 
+            if (retVal == 1) {
+                System.out.println("Cancel/close: " + retVal);
+                continue;
+            } else if (retVal == 0) {
+                System.out.println("Open: " + retVal);
+            }
+
             if (op == 1) {
                 try {
                     //Decoder decoder = null;
