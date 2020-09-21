@@ -5,7 +5,7 @@ import java.util.BitSet;
 
 public class Hamming {
 
-    public static byte[] encode(byte[] data) {
+    public static ArrayList<Byte> encode(byte[] data) {
         ArrayList<Byte> resultBytes = new ArrayList<>();
         BitSet codeword = new BitSet();
         int bitPosition = 0;
@@ -40,13 +40,7 @@ public class Hamming {
             resultBytes.add(calcHamming(codeword));
         }
 
-        System.out.println("array: "+resultBytes.toString());
-        byte[] result = new byte[resultBytes.size()];
-
-        for (int i = 0; i < result.length; i++) {
-            result[i] = resultBytes.get(i);
-        }
-        return result;
+        return resultBytes;
     }
 
     private static byte calcHamming(BitSet codeword) {

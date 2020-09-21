@@ -32,11 +32,16 @@ public class Main {
             final JFileChooser fileChooser = new JFileChooser();
             fileChooser.setMultiSelectionEnabled(false);
             fileChooser.setCurrentDirectory(new java.io.File("./arquivos"));
-            if (op == 1) {
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("*.cod", "cod");
-                fileChooser.setFileFilter(filter);
-                fileChooser.addChoosableFileFilter(filter);
+            FileNameExtensionFilter filter;
+            if (op == 0) {
+                filter = new FileNameExtensionFilter("*.cod", "cod");
+            } else {
+                filter = new FileNameExtensionFilter("*.ecc", "ecc");
+
             }
+            fileChooser.setFileFilter(filter);
+            fileChooser.addChoosableFileFilter(filter);
+
             File selectedFile = null;
             int retVal = fileChooser.showOpenDialog(null);
             if (retVal == JFileChooser.APPROVE_OPTION) {
@@ -56,8 +61,9 @@ public class Main {
                 try {
                     //Decoder decoder = null;
                     byte[] data = Files.readAllBytes(selectedFile.toPath());
+                    //call method to remove noise treatment
                     byte[] result = data/* decoder.decode(data) */;
-                    final String ext = ".dec";
+                    final String ext = ".cod";
                     String filePath = selectedFile.getPath();
                     int extIndex = filePath.lastIndexOf(".");
                     String newPath = (extIndex > -1 ? filePath.substring(0, extIndex) : filePath) + ext;
@@ -67,38 +73,11 @@ public class Main {
                     e.printStackTrace();
                 }
             } else {
-                // escolher codificador (0: Golomb, 1:Elias-Gamma, 2:Fibonacci, 3:Unária e 4:Delta)
-                Object[] items = {"Golomb", "Elias-Gamma", "Fibonacci", "Unária", "Delta"};
-                Object selectedValue = JOptionPane.showInputDialog(null, "Escolha um codificador:", "Opção",
-                        JOptionPane.INFORMATION_MESSAGE, null, items, items[0]);
-
-                if(selectedValue == items[0]) {
-                    boolean invalidDivisor = true;
-                    String inputValue = null;
-
-                    while (invalidDivisor) {
-                        inputValue = JOptionPane.showInputDialog("Insira o valor do divisor: (Entre 1 e 255)");
-
-                        if (inputValue == null) {
-                            break;
-                        }
-
-                        try {
-                            int divisor = Integer.parseInt(inputValue);
-                            if(divisor > 0 && divisor < 256) {
-                                invalidDivisor = false;
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-
                 try {
                     TratamentoRuido encoder = new TratamentoRuido();
                     byte[] data = Files.readAllBytes(selectedFile.toPath());
                     byte[] result = encoder.addNoiseTreatment(data);
-                    final String ext = ".cod";
+                    final String ext = ".ecc";
                     String filePath = selectedFile.getPath();
                     int extIndex = filePath.lastIndexOf(".");
                     String newPath = (extIndex > -1 ? filePath.substring(0, extIndex) : filePath) + ext;
