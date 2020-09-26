@@ -47,7 +47,7 @@ public class Main {
             int retVal = fileChooser.showOpenDialog(null);
             if (retVal == JFileChooser.APPROVE_OPTION) {
                 if (op == 1) {
-                    while (retVal == JFileChooser.APPROVE_OPTION && !fileChooser.getSelectedFile().getName().endsWith(".cod")) {
+                    while (retVal == JFileChooser.APPROVE_OPTION && !fileChooser.getSelectedFile().getName().endsWith(".ecc")) {
                         JOptionPane.showMessageDialog(null, "O arquivo "
                                         + fileChooser.getSelectedFile().getName() + " não é um arquivo codificado!",
                                 "Erro de compatibilidade", JOptionPane.ERROR_MESSAGE);
@@ -71,7 +71,7 @@ public class Main {
                     byte[] data = Files.readAllBytes(selectedFile.toPath());
                     //call method to remove noise treatment
                     byte[] result = encoder.checkNoiseTreatment(data);
-                    if(result.length() == 0) { // se retornou vazio cabeçalho esta alterado
+                    if(result.length == 0) { // se retornou vazio cabeçalho esta alterado
                         JOptionPane.showMessageDialog(null, "O arquivo escolhido foi corrompido, não é possível decodificá-lo",
                          "Erro", JOptionPane.ERROR_MESSAGE);
                         continue; // sa para o menu
