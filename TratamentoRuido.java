@@ -1,4 +1,5 @@
 import crc.CRC8;
+import crc.InvalidCRC;
 import hamming.Hamming;
 
 import java.util.ArrayList;
@@ -28,21 +29,21 @@ public class TratamentoRuido {
         return result;
     }
 
-    public byte[] checkNoiseTreatment(byte[] data) {
+    public byte[] checkNoiseTreatment(byte[] data) throws InvalidCRC {
         ArrayList<Byte> resultBytes = new ArrayList<>();
         resultBytes.add(data[0]);
         resultBytes.add(data[1]);
 
         byte calculatedCrc = CRC8.calc(getDataForCrc(data));
         if(calculatedCrc != data[2]) {
-            byte[] result = new byte[0];
-            return result;
+            throw new InvalidCRC("O arquivo está corrompido!");
         }
 
 //        ArrayList<Byte> hammingResult = Hamming.encode(data);
 //        resultBytes.addAll(3, hammingResult);
 
-        for(int i = 2; i < data.length; i++){
+        //começa no 3 pra pular o crc
+        for(int i = 3; i < data.length; i++){
             resultBytes.add(data[i]);
         }
 
@@ -54,17 +55,9 @@ public class TratamentoRuido {
         return result;
     }
 
-    public void removeNoiseTreatment(){
-        //TBD
-        //this method shall check CRC is equal - if not then stop process
-        //this method shall check hamming codes and try to fix error if possible
-    }
-
     private byte[] getDataForCrc(byte[] data){
         byte [] dataForCrc = new byte[2];
-        for(int i = 0; i < 2; i++){
-            dataForCrc[i] = data[i];
-        }
+        System.arraycopy(data, 0, dataForCrc, 0, 2);
         return dataForCrc;
     }
 

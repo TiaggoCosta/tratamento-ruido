@@ -1,3 +1,5 @@
+import crc.InvalidCRC;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
@@ -65,17 +67,12 @@ public class Main {
                 System.out.println("Open: " + retVal);
             }
 
+            TratamentoRuido noiseTreatment = new TratamentoRuido();
+
             if (op == 1) {
                 try {
-                    TratamentoRuido encoder = new TratamentoRuido();
                     byte[] data = Files.readAllBytes(selectedFile.toPath());
-                    //call method to remove noise treatment
-                    byte[] result = encoder.checkNoiseTreatment(data);
-                    if(result.length == 0) { // se retornou vazio cabeçalho esta alterado
-                        JOptionPane.showMessageDialog(null, "O arquivo escolhido foi corrompido, não é possível decodificá-lo",
-                         "Erro", JOptionPane.ERROR_MESSAGE);
-                        continue; // sa para o menu
-                    }
+                    byte[] result = noiseTreatment.checkNoiseTreatment(data);
                     final String ext = ".cod";
                     String filePath = selectedFile.getPath();
                     int extIndex = filePath.lastIndexOf(".");
@@ -84,12 +81,14 @@ public class Main {
                     JOptionPane.showMessageDialog(null, "Decodificação concluída com sucesso");
                 } catch (IOException e) {
                     e.printStackTrace();
+                } catch (InvalidCRC e) {
+                    JOptionPane.showMessageDialog(null, "O arquivo escolhido foi corrompido, não é possível decodificá-lo",
+                            "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 try {
-                    TratamentoRuido encoder = new TratamentoRuido();
                     byte[] data = Files.readAllBytes(selectedFile.toPath());
-                    byte[] result = encoder.addNoiseTreatment(data);
+                    byte[] result = noiseTreatment.addNoiseTreatment(data);
                     final String ext = ".ecc";
                     String filePath = selectedFile.getPath();
                     int extIndex = filePath.lastIndexOf(".");
