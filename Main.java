@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -66,10 +67,15 @@ public class Main {
 
             if (op == 1) {
                 try {
-                    //Decoder decoder = null;
+                    TratamentoRuido encoder = new TratamentoRuido();
                     byte[] data = Files.readAllBytes(selectedFile.toPath());
                     //call method to remove noise treatment
-                    byte[] result = data/* decoder.decode(data) */;
+                    byte[] result = encoder.checkNoiseTreatment(data);
+                    if(result.length() == 0) { // se retornou vazio cabeçalho esta alterado
+                        JOptionPane.showMessageDialog(null, "O arquivo escolhido foi corrompido, não é possível decodificá-lo",
+                         "Erro", JOptionPane.ERROR_MESSAGE);
+                        continue; // sa para o menu
+                    }
                     final String ext = ".cod";
                     String filePath = selectedFile.getPath();
                     int extIndex = filePath.lastIndexOf(".");
