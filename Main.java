@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 
 public class Main {
 
@@ -20,7 +19,6 @@ public class Main {
                     JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, functions, functions[0]);
 
             if (op == -1) {
-                System.out.println("Finalizar: " + op);
                 Object[] options = {"Sim, finalizar programa", "Não, desejo recomeçar"};
                 int end = JOptionPane.showOptionDialog(null, "Deseja encerrar o programa?", "Finalizar",
                         JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
@@ -60,13 +58,6 @@ public class Main {
                 JOptionPane.showMessageDialog(null, selectedFile.getName());
             }
 
-            if (retVal == 1) {
-                System.out.println("Cancel/close: " + retVal);
-                continue;
-            } else if (retVal == 0) {
-                System.out.println("Open: " + retVal);
-            }
-
             TratamentoRuido noiseTreatment = new TratamentoRuido();
 
             if (op == 1) {
@@ -93,7 +84,6 @@ public class Main {
                     String filePath = selectedFile.getPath();
                     int extIndex = filePath.lastIndexOf(".");
                     String newPath = (extIndex > -1 ? filePath.substring(0, extIndex) : filePath) + ext;
-                    System.out.println("resultado: " + Arrays.toString(result));
                     Files.write(Paths.get(newPath), result);
                     JOptionPane.showMessageDialog(null, "Codificação concluída com sucesso");
                 } catch (IOException e) {
