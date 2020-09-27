@@ -14,6 +14,25 @@
 
 ---
 
+### HOW TO RUN
+
+Para rodar a implementação feita pelo grupo, basta rodar a classe **Main**. 
+
+A partir dai, um menu aparecerá na tela, como abaixo:
+
+
+![menu](images/menu.PNG)
+
+Ao escolher a opção **Codificar** será adicionado o tratamento de ruído e um arquivo .ecc será gerado. Nesta opção, apenas arquivos .cod podem ser selecionados.
+
+A implementação de tratamento de ruído feita pelo grupo foi somente do CRC-8 dos dois primeiros bytes do arquivo .cod. O arquivo .ecc contém o CRC calculado no 3º byte.
+ 
+Se a opção **Decodificar** for selecionada, será possível apenas selecionar arquivos .ecc e então em cima dele é feita a verificação do tratamento de ruídos.
+
+A verificação do tratamento de ruídos feita pelo grupo é realizada soente para o CRC do 3º byte contra o valor novamente calculado dos dois primeiros bytes. Caso os valores sejam diferentes, é jogada uma exceção e o processo é interrompido, pois isso indica que o cabeçalho está corrompido.
+
+---
+
 ### Objetivo do T2:
 
 Neste trabalho deve ser acrescentado ao cenário do T1 técnicas de tratamento de ruído (códigos de correção de erro - ECC). Essa funcionalidade pode ser acrescentada de maneira separada/independente ou acrescida/integrada às implementações do encoder e do decoder. A figura a seguir apresenta esta nova etapa no processo, que fica após a codificação do arquivo original e antes da decodificação do mesmo.
