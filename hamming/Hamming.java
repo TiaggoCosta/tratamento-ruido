@@ -1,6 +1,7 @@
 package hamming;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
 
 public class Hamming {
@@ -40,6 +41,13 @@ public class Hamming {
             resultBytes.add(calcHamming(codeword));
         }
 
+        byte[] result = new byte[resultBytes.size()];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = resultBytes.get(i);
+        }
+
+        System.out.println("resultado: " + Arrays.toString(result));
+
         return resultBytes;
     }
 
@@ -61,11 +69,10 @@ public class Hamming {
         for(int i=0; i<8; i++) {
             System.out.println(codeword.get(i));
         }
-        System.out.println("byte na saída: ");
-        byte[] bytes = new byte[(codeword.length() + 7) / 8];
-        byte coded = codeword.toByteArray()[0];
+
+        byte coded = !codeword.isEmpty() ? codeword.toByteArray()[0] : 0;
         System.out.println("byte na saída: "+coded);
-        return bytes[0];
+        return coded;
     }
 
 }
