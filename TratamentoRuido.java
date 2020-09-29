@@ -14,8 +14,8 @@ public class TratamentoRuido {
         byte calculatedCrc = CRC8.calc(getDataForCrc(data));
         resultBytes.add(calculatedCrc);
 
-//        ArrayList<Byte> hammingResult = Hamming.encode(data);
-//        resultBytes.addAll(3, hammingResult);
+        ArrayList<Byte> hammingResult = Hamming.encode(data);
+        resultBytes.addAll(3, hammingResult);
 
         for(int i = 2; i < data.length; i++){
             resultBytes.add(data[i]);
