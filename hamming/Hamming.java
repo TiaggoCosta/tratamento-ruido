@@ -56,13 +56,50 @@ public class Hamming {
         for(int i=0; i<8; i++) {
             System.out.println(codeword.get(i));
         }
-        // para cada bit, soma bit(i) com bit(i+1)
-        for(int i=0; i<3; i++) {
-            // se soma = impar(1), res=1
-            // senao, res=0
-            if(codeword.get(i) && !codeword.get(i+1) || !codeword.get(i) && codeword.get(i+1)) {
-                codeword.set(i+4);
-            }
+
+        //1st hamming code
+        int first = 0;
+        if(codeword.get(0))
+            first++;
+        if(codeword.get(2))
+            first++;
+        if(codeword.get(1))
+            first++;
+
+        if(first%2 == 0 || first == 0){
+            //stays false
+        } else{
+            codeword.set(4);
+        }
+
+        //2nd hamming code
+        int second = 0;
+        if(codeword.get(1))
+            second++;
+        if(codeword.get(2))
+            second++;
+        if(codeword.get(3))
+            second++;
+
+        if(second%2 == 0 || second == 0){
+            //stays false
+        } else{
+            codeword.set(5);
+        }
+
+        //3rd hamming code
+        int third = 0;
+        if(codeword.get(0))
+            third++;
+        if(codeword.get(2))
+            third++;
+        if(codeword.get(3))
+            third++;
+
+        if(third%2 == 0 || third == 0){
+            //stays false
+        } else{
+            codeword.set(6);
         }
 
         System.out.println("codeword na saída");
