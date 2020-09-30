@@ -39,8 +39,8 @@ public class TratamentoRuido {
             throw new InvalidCRC("O arquivo está corrompido!");
         }
 
-//        ArrayList<Byte> hammingResult = Hamming.encode(data);
-//        resultBytes.addAll(3, hammingResult);
+        ArrayList<Byte> hammingResult = Hamming.decode(data);
+        resultBytes.addAll(3, hammingResult);
 
         //começa no 3 pra pular o crc
         for(int i = 3; i < data.length; i++){
