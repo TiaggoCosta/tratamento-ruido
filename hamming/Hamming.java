@@ -58,49 +58,13 @@ public class Hamming {
         }
 
         //1st hamming code
-        int first = 0;
-        if(codeword.get(0))
-            first++;
-        if(codeword.get(2))
-            first++;
-        if(codeword.get(1))
-            first++;
-
-        if(first%2 == 0 || first == 0){
-            //stays false
-        } else{
-            codeword.set(4);
-        }
+        setHammingCode(codeword, 0, 2, 1, 4);
 
         //2nd hamming code
-        int second = 0;
-        if(codeword.get(1))
-            second++;
-        if(codeword.get(2))
-            second++;
-        if(codeword.get(3))
-            second++;
-
-        if(second%2 == 0 || second == 0){
-            //stays false
-        } else{
-            codeword.set(5);
-        }
+        setHammingCode(codeword, 1, 2, 3, 5);
 
         //3rd hamming code
-        int third = 0;
-        if(codeword.get(0))
-            third++;
-        if(codeword.get(2))
-            third++;
-        if(codeword.get(3))
-            third++;
-
-        if(third%2 == 0 || third == 0){
-            //stays false
-        } else{
-            codeword.set(6);
-        }
+        setHammingCode(codeword, 0, 2, 3, 6);
 
         System.out.println("codeword na saída");
         for(int i=0; i<8; i++) {
@@ -110,6 +74,20 @@ public class Hamming {
         byte coded = !codeword.isEmpty() ? codeword.toByteArray()[0] : 0;
         System.out.println("byte na saída: "+coded);
         return coded;
+    }
+
+    private static void setHammingCode(BitSet codeword, int index1, int index2, int index3, int indexToSet){
+        int count = 0;
+        if(codeword.get(index1))
+            count++;
+        if(codeword.get(index2))
+            count++;
+        if(codeword.get(index3))
+            count++;
+
+        if(count%2 != 0){
+            codeword.set(indexToSet);
+        }
     }
 
 }
