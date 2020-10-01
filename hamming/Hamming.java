@@ -70,46 +70,52 @@ public class Hamming {
         // para cada bit, exceto o cabeçalho
         for(int index = 3; index < data.length; index++) {
             BitSet bits = BitSet.valueOf(new long[] { data[index] });
-            BitSet bitsIniciais, bitsFinais, bitsDecoded = 0;
+            BitSet bitsIniciais, bitsFinais, bitsDecoded = BitSet.valueOf( new long[] {0});
             
             System.out.println("index: "+index);
+            System.out.println("bit position: "+bitPosition);
             System.out.println("bits: "+bits.toString());
             // até 4 bits, vai registrando os bits no codeword
             for(int i = 7; i >= 0; i--) {
-                if(bitPosition == 8) {
-                    System.out.println("bit position: "+bitPosition);
-                    
-                    // salva o resultado no resultBytes, e recomeça
-                    if(index%2==1) { // 4 bits iniciais
-                        bitsIniciais = checkHamming(codeword);
-                        for(int j=0; j<4; j++) {
-                            if(bitsIniciais.get(j)) {
-                                bitsDecoded.set(j);
-                            }
-                        }
-                        bitsIniciais.clear();
-                    } else { // 4 bits finais
-                        bitsFinais = checkHamming(codeword);
-                        for(int j=0; j<4; j++) {
-                            if(bitsFinais.get(j)) {
-                                bitsDecoded.set(j+4);
-                            }
-                        }
-                        byte decoded = !bitsDecoded.isEmpty() ? bitsDecoded.toByteArray()[0] : 0;
-                        resultBytes.add(reverseBitsOfByte(decoded));
-                        bitsFinais.clear();
-                        bitsDecoded.clear();
-                    }
-                    bitPosition = 0;
-                    codeword.clear();
-                }
                 if(bits.get(i)) {
                     codeword.set(bitPosition);
                 }
                 System.out.println("i: "+i+" codeword: "+codeword.toString());
                 bitPosition++;
             } 
-            
+
+            if(bitPosition == 8) {
+                // salva o resultado no resultBytes, e recomeça
+                if(index%2==1) { // 4 bits iniciais
+                    bitsIniciais = checkHamming(codeword);
+                    for(int j=0; j<4; j++) {
+                        if(bitsIniciais.get(j)) {
+                            bitsDecoded.set(j);
+                        }
+                    }
+                    System.out.println("bits decoded: "+bitsDecoded.toString());
+                    System.out.println("bits iniciais: "+bitsIniciais.toString());
+                    bitsIniciais.clear();
+                } else { // 4 bits finais
+                    bitsFinais = checkHamming(codeword);
+                    for(int j=0; j<4; j++) {
+                        if(bitsFinais.get(j)) {
+                            bitsDecoded.set(j+4);
+                        }
+                    }
+                    System.out.println("bits decoded: "+bitsDecoded.toString());
+                    System.out.println("bits finais: "+bitsFinais.toString());
+                    byte decoded = !bitsDecoded.isEmpty() ? bitsDecoded.toByteArray()[0] : 0;
+                    System.out.println("decoded: "+decoded);
+                    System.out.println("decoded invertido: "+reverseBitsOfByte(decoded));
+                    System.out.println("---------------------------------------");
+                    resultBytes.add(reverseBitsOfByte(decoded));
+                    bitsFinais.clear();
+                    bitsDecoded.clear();
+                }
+                bitPosition = 0;
+                codeword.clear();
+            }
         }
 
         System.out.println("resultado hamming: " + resultBytes.toString());
@@ -118,7 +124,7 @@ public class Hamming {
     }
 
     private static BitSet checkHamming(BitSet codeword) {
-        BitSet result;
+        BitSet result = BitSet.valueOf( new long[] {0});
         // calcula o hamming para o codeword, detecta erros
         for(int i=0; i<4; i++) {
             if(codeword.get(i)) {
