@@ -125,12 +125,52 @@ public class Hamming {
 
     private static BitSet checkHamming(BitSet codeword) {
         BitSet result = BitSet.valueOf( new long[] {0});
+        // forçar erro
+        //codeword.flip(0); // no 1o
+        //codeword.flip(1); // no 2o
+        //codeword.flip(2); // no 3o
+        //codeword.flip(3); // no 4o
         // calcula o hamming para o codeword, detecta erros
         for(int i=0; i<4; i++) {
             if(codeword.get(i)) {
                 result.set(i);
             }
         }
+        
+        System.out.println(">> result: "+result.toString());
+
+        //1st hamming code
+        setHammingCode(result, 0, 2, 1, 4);
+
+        //2nd hamming code
+        setHammingCode(result, 1, 2, 3, 5);
+
+        //3rd hamming code
+        setHammingCode(result, 0, 2, 3, 6);
+
+        System.out.println(">>> result: "+result.toString());
+
+        if(result.get(4) != codeword.get(4) && result.get(6) != codeword.get(6)) {
+            result.flip(0);
+            System.out.println("Ruído corrigido no 1o bit!");
+        }
+
+        if(result.get(4) != codeword.get(4) && result.get(5) != codeword.get(5)) {
+            result.flip(1);
+            System.out.println("Ruído corrigido no 2o bit!");
+        }
+
+        if(result.get(4) != codeword.get(4) && result.get(5) != codeword.get(5) && result.get(6) != codeword.get(6)) {
+            result.flip(2);
+            System.out.println("Ruído corrigido no 3o bit!");
+        }
+
+        if(result.get(5) != codeword.get(5) && result.get(6) != codeword.get(6)) {
+            result.flip(3);
+            System.out.println("Ruído corrigido no 4o bit!");
+        }
+
+        System.out.println(">>>> result: "+result.toString());
 
         return result;
     }
