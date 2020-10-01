@@ -38,7 +38,7 @@ public class TratamentoRuido {
         }
 
         ArrayList<Byte> hammingResult = Hamming.decode(data);
-        resultBytes.addAll(3, hammingResult);
+        resultBytes.addAll(2, hammingResult);
 
         byte[] result = new byte[resultBytes.size()];
 

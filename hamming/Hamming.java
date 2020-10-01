@@ -60,7 +60,8 @@ public class Hamming {
         ArrayList<Byte> resultBytes = new ArrayList<>();
         BitSet codeword = new BitSet();
         int bitPosition = 0;
-
+        BitSet bitsIniciais, bitsFinais, bitsDecoded = BitSet.valueOf( new long[] {0});
+            
         for(byte b : data) {
             // b = valor inteiro do char
             System.out.println("valor char = " + b);
@@ -70,7 +71,6 @@ public class Hamming {
         // para cada bit, exceto o cabeçalho
         for(int index = 3; index < data.length; index++) {
             BitSet bits = BitSet.valueOf(new long[] { data[index] });
-            BitSet bitsIniciais, bitsFinais, bitsDecoded = BitSet.valueOf( new long[] {0});
             
             System.out.println("index: "+index);
             System.out.println("bit position: "+bitPosition);
