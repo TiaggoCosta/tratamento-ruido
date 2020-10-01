@@ -29,7 +29,7 @@ A implementação de tratamento de ruído feita pelo grupo foi somente do CRC-8 
  
 Se a opção **Decodificar** for selecionada, será possível apenas selecionar arquivos .ecc e então em cima dele é feita a verificação do tratamento de ruídos.
 
-A verificação do tratamento de ruídos feita pelo grupo é realizada soente para o CRC do 3º byte contra o valor novamente calculado dos dois primeiros bytes. Caso os valores sejam diferentes, é jogada uma exceção e o processo é interrompido, pois isso indica que o cabeçalho está corrompido.
+A verificação do tratamento de ruídos feita pelo grupo é realizada somente para o CRC do 3º byte contra o valor novamente calculado dos dois primeiros bytes. Caso os valores sejam diferentes, é jogada uma exceção e o processo é interrompido, pois isso indica que o cabeçalho está corrompido.
 
 ---
 
