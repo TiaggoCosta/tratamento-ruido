@@ -51,12 +51,7 @@ public class Hamming {
             }
         }
 
-        byte[] result = new byte[resultBytes.size()];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = resultBytes.get(i);
-        }
-
-        System.out.println("resultado: " + Arrays.toString(result));
+        System.out.println("resultado hamming: " + resultBytes.toString());
 
         return resultBytes;
     }
@@ -73,18 +68,38 @@ public class Hamming {
         }
         
         // para cada bit, exceto o cabeçalho
-        /* for(int index = 2; index < data.length; index++) {
+        for(int index = 3; index < data.length; index++) {
             BitSet bits = BitSet.valueOf(new long[] { data[index] });
+            BitSet bitsIniciais, bitsFinais, bitsDecoded = 0;
             
             System.out.println("index: "+index);
             System.out.println("bits: "+bits.toString());
             // até 4 bits, vai registrando os bits no codeword
             for(int i = 7; i >= 0; i--) {
-                if(bitPosition == 4) {
+                if(bitPosition == 8) {
                     System.out.println("bit position: "+bitPosition);
-                    // calcula o hamming
-                    resultBytes.add(calcHamming(codeword));
+                    
                     // salva o resultado no resultBytes, e recomeça
+                    if(index%2==1) { // 4 bits iniciais
+                        bitsIniciais = checkHamming(codeword);
+                        for(int j=0; j<4; j++) {
+                            if(bitsIniciais.get(j)) {
+                                bitsDecoded.set(j);
+                            }
+                        }
+                        bitsIniciais.clear();
+                    } else { // 4 bits finais
+                        bitsFinais = checkHamming(codeword);
+                        for(int j=0; j<4; j++) {
+                            if(bitsFinais.get(j)) {
+                                bitsDecoded.set(j+4);
+                            }
+                        }
+                        byte decoded = !bitsDecoded.isEmpty() ? bitsDecoded.toByteArray()[0] : 0;
+                        resultBytes.add(reverseBitsOfByte(decoded));
+                        bitsFinais.clear();
+                        bitsDecoded.clear();
+                    }
                     bitPosition = 0;
                     codeword.clear();
                 }
@@ -95,16 +110,23 @@ public class Hamming {
                 bitPosition++;
             } 
             
-        } */
-
-        byte[] result = new byte[resultBytes.size()];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = resultBytes.get(i);
         }
 
-        System.out.println("resultado: " + Arrays.toString(result));
+        System.out.println("resultado hamming: " + resultBytes.toString());
 
         return resultBytes;
+    }
+
+    private static BitSet checkHamming(BitSet codeword) {
+        BitSet result;
+        // calcula o hamming para o codeword, detecta erros
+        for(int i=0; i<4; i++) {
+            if(codeword.get(i)) {
+                result.set(i);
+            }
+        }
+
+        return result;
     }
 
     private static byte calcHamming(BitSet codeword) {
