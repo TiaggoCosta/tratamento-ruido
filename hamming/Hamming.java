@@ -128,7 +128,7 @@ public class Hamming {
         // forçar erro
         //codeword.flip(0); // no 1o
         //codeword.flip(1); // no 2o
-        //codeword.flip(2); // no 3o
+        codeword.flip(2); // no 3o
         //codeword.flip(3); // no 4o
         // calcula o hamming para o codeword, detecta erros
         for(int i=0; i<4; i++) {
@@ -150,22 +150,22 @@ public class Hamming {
 
         System.out.println(">>> result: "+result.toString());
 
-        if(result.get(4) != codeword.get(4) && result.get(6) != codeword.get(6)) {
+        if(result.get(4) != codeword.get(4) && result.get(5) != codeword.get(5) && result.get(6) != codeword.get(6)) {
+            result.flip(2);
+            System.out.println("Ruído corrigido no 3o bit!");
+        } 
+
+        else if(result.get(4) != codeword.get(4) && result.get(6) != codeword.get(6)) {
             result.flip(0);
             System.out.println("Ruído corrigido no 1o bit!");
         }
 
-        if(result.get(4) != codeword.get(4) && result.get(5) != codeword.get(5)) {
+        else if(result.get(4) != codeword.get(4) && result.get(5) != codeword.get(5)) {
             result.flip(1);
             System.out.println("Ruído corrigido no 2o bit!");
         }
 
-        if(result.get(4) != codeword.get(4) && result.get(5) != codeword.get(5) && result.get(6) != codeword.get(6)) {
-            result.flip(2);
-            System.out.println("Ruído corrigido no 3o bit!");
-        }
-
-        if(result.get(5) != codeword.get(5) && result.get(6) != codeword.get(6)) {
+        else if(result.get(5) != codeword.get(5) && result.get(6) != codeword.get(6)) {
             result.flip(3);
             System.out.println("Ruído corrigido no 4o bit!");
         }
