@@ -62,6 +62,10 @@ public class Main {
 
             TratamentoRuido noiseTreatment = new TratamentoRuido();
 
+            if (retVal == 1) {
+                continue;
+            }
+
             if (op == 1) {
                 try {
                     byte[] data = Files.readAllBytes(selectedFile.toPath());
