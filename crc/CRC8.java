@@ -315,7 +315,6 @@ public final class CRC8 {
      * Calculate the CRC value with data from a byte array.
      *
      * @param data  The byte array
-     * @param len   The byte array length
      * @return      The calculated CRC value
      */
     public static byte calc(byte[] data) {
