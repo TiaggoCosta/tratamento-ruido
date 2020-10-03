@@ -22,7 +22,6 @@ public class TratamentoRuido {
         for (int i = 0; i < result.length; i++) {
             result[i] = resultBytes.get(i);
         }
-        System.out.println("resultado addNoise: " + Arrays.toString(result));
 
         return result;
     }
@@ -45,7 +44,6 @@ public class TratamentoRuido {
         for (int i = 0; i < result.length; i++) {
             result[i] = resultBytes.get(i);
         }
-        System.out.println("resultado checkNoise: " + Arrays.toString(result));
 
         return result;
     }
