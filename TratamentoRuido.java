@@ -3,7 +3,6 @@ import crc.InvalidCRC;
 import hamming.Hamming;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TratamentoRuido {
 
