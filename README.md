@@ -33,6 +33,30 @@ A verificação do tratamento de ruídos feita pelo grupo é realizada somente p
 
 ---
 
+### Informações da Implementação
+
+O tratamento de ruído tem a seguinte estrutura:
+
+- Classe **TratamentoRuido** com dois métodos principais:
+   - addNoiseTreatment: adiciona informações de tratamento de ruído, que são o CRC8 e Hamming. Chamado quando a opção codificação no menu é selecionada.
+   - checkNoiseTreatment: verifica se há problema nas informações codificadas do arquivo .ecc e informa o usuário, sendo por meio de interrupção do processo caso haja problema no CRC8 ou somente logando e ajustando problemas encontrados no Hamming. Além disso, remove a informação adicionada anteriormente pelo **addNoiseTreatment**, dessa forma tem-se o arquivo .cod original. Chamado quando a opção decodificação no menu é selecionada.
+
+* CRC 8
+
+   O CRC8 é calculado utilizando os 2 primeiros bytes do arquivo, referentes ao cabeçalho. Para cálculo do CRC8 foi utilizado um código pronto encontrado pelo grupo em pesquisas na internet, sua referência pode ser encontrada ao final deste Readme. A classe que faz esse cálculo é a **CRC8**.
+   
+   Foi realizada apenas uma modificação no código: no método **calc** foi removido o parametro de entrada **len** que se refere ao tamanho do vetor recebido. Isto foi feito pois o tamanho do vetor pode ser acessado por **data.length**.
+   
+   Caso na decodificação os valor de CRC8 calculados sejam diferentes, então uma exceção é jogada, para interromper o processo. Esta exceção é a da classe **InvalidCRC**.
+   
+* Hamming
+
+   Os códigos Hamming são calculados para o restante dos bytes do arquivo de entrada (.cod). A codificação e decodificação Hamming encontram-se na classe **Hamming**.
+   
+   Foi utilizada a estrutura [BitSet](https://docs.oracle.com/javase/7/docs/api/java/util/BitSet.html) do Java para fácil acesso aos bits para realização da codificação quanto da verificação de erros na decodificação.
+
+---
+
 ### Objetivo do T2:
 
 Neste trabalho deve ser acrescentado ao cenário do T1 técnicas de tratamento de ruído (códigos de correção de erro - ECC). Essa funcionalidade pode ser acrescentada de maneira separada/independente ou acrescida/integrada às implementações do encoder e do decoder. A figura a seguir apresenta esta nova etapa no processo, que fica após a codificação do arquivo original e antes da decodificação do mesmo.
