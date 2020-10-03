@@ -97,11 +97,6 @@ public class Hamming {
 
     private static BitSet checkHamming(BitSet codeword) {
         BitSet result = BitSet.valueOf( new long[] {0});
-        // forçar erro
-        //codeword.flip(0); // no 1o
-        //codeword.flip(1); // no 2o
-        //codeword.flip(2); // no 3o
-        //codeword.flip(3); // no 4o
         // calcula o hamming para o codeword, detecta erros
         for(int i=0; i<4; i++) {
             if(codeword.get(i)) {
