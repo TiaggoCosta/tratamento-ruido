@@ -25,11 +25,9 @@ A partir dai, um menu aparecerá na tela, como abaixo:
 
 Ao escolher a opção **Codificar** será adicionado o tratamento de ruído e um arquivo .ecc será gerado. Nesta opção, apenas arquivos .cod podem ser selecionados.
 
-A implementação de tratamento de ruído feita pelo grupo foi somente do CRC-8 dos dois primeiros bytes do arquivo .cod. O arquivo .ecc contém o CRC calculado no 3º byte.
+A implementação de tratamento de ruído feita pelo grupo adiciona o CRC-8 dos dois primeiros bytes do arquivo .cod e também os codewords Hamming do restante do aqruivo .cod. O arquivo .ecc contém o CRC calculado no 3º byte e os codewords Hamming a seguir.
  
 Se a opção **Decodificar** for selecionada, será possível apenas selecionar arquivos .ecc e então em cima dele é feita a verificação do tratamento de ruídos.
-
-A verificação do tratamento de ruídos feita pelo grupo é realizada somente para o CRC do 3º byte contra o valor novamente calculado dos dois primeiros bytes. Caso os valores sejam diferentes, é jogada uma exceção e o processo é interrompido, pois isso indica que o cabeçalho está corrompido.
 
 ---
 
