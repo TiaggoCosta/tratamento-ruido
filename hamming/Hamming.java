@@ -28,7 +28,7 @@ public class Hamming {
                 if(bitPosition == 4) {
                     System.out.println("bit position: "+bitPosition);
                     // calcula o hamming
-                    resultBytes.add(reverseBitsOfByte(calcHamming(codeword)));
+                    resultBytes.add(calcHamming(codeword));
                     // salva o resultado no resultBytes, e recomeça
                     bitPosition = 0;
                     codeword.clear();
@@ -47,7 +47,7 @@ public class Hamming {
                         codeword.set(3-i);
                     }
                 }
-                resultBytes.add(reverseBitsOfByte(calcHamming(codeword)));
+                resultBytes.add(calcHamming(codeword));
             }
         }
 
@@ -105,11 +105,12 @@ public class Hamming {
                     }
                     System.out.println("bits decoded: "+bitsDecoded.toString());
                     System.out.println("bits finais: "+bitsFinais.toString());
+                    bitsDecoded = reverseBitsOfBitset(bitsDecoded);
+                    System.out.println("bits decoded: "+bitsDecoded.toString());
                     byte decoded = !bitsDecoded.isEmpty() ? bitsDecoded.toByteArray()[0] : 0;
                     System.out.println("decoded: "+decoded);
-                    System.out.println("decoded invertido: "+reverseBitsOfByte(decoded));
                     System.out.println("---------------------------------------");
-                    resultBytes.add(reverseBitsOfByte(decoded));
+                    resultBytes.add(decoded);
                     bitsFinais.clear();
                     bitsDecoded.clear();
                 }
@@ -128,7 +129,7 @@ public class Hamming {
         // forçar erro
         //codeword.flip(0); // no 1o
         //codeword.flip(1); // no 2o
-        codeword.flip(2); // no 3o
+        //codeword.flip(2); // no 3o
         //codeword.flip(3); // no 4o
         // calcula o hamming para o codeword, detecta erros
         for(int i=0; i<4; i++) {
@@ -194,6 +195,11 @@ public class Hamming {
         for(int i=0; i<8; i++) {
             System.out.println(codeword.get(i));
         }
+        codeword = reverseBitsOfBitset(codeword);
+        System.out.println("codeword invertido na saída");
+        for(int i=0; i<8; i++) {
+            System.out.println(codeword.get(i));
+        }
 
         byte coded = !codeword.isEmpty() ? codeword.toByteArray()[0] : 0;
         System.out.println("byte na saída: "+coded);
@@ -214,13 +220,16 @@ public class Hamming {
         }
     }
 
-    private static byte reverseBitsOfByte(byte inByte) {
-        int intSize = 8;
-        byte outByte = 0;
-        for (int position=intSize-1; position > 0; position--) {
-            outByte += ((inByte&1)<<position);
-            inByte >>= 1;
+    private static BitSet reverseBitsOfBitset(BitSet inByte) {
+        BitSet result = BitSet.valueOf( new long[] {0});
+
+        for (int i = 0; i < 8; i++) {
+            if(inByte.get(i)) {
+                result.set(7-i);
+            }
         }
-        return outByte;
+
+        return result;
     }
+
 }
